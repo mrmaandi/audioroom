@@ -8,7 +8,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [
-    require('tailwind-scrollbar-hide')
-  ],
+  plugins: [],
 }

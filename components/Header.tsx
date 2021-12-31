@@ -1,9 +1,7 @@
-import { BeakerIcon } from '@heroicons/react/solid'
-
 function Header() {
   return (
-    <div>
-      
+    <div className="relative">
+      <div className="md:container md:mx-auto">Audioroom</div>
     </div>
   );
 }
