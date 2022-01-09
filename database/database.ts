@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, Room } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
@@ -24,4 +24,8 @@ export async function main() {
       .finally(async () => {
         await prisma.$disconnect()
       })
+}
+
+export async function getRooms(): Promise<Room[]> {
+  return await prisma.room.findMany()
 }
