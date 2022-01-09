@@ -8,14 +8,13 @@ datasource db {
 }
 
 model Room {
-  id                Int             @id @default(autoincrement())
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
-  start             DateTime?
-  end               DateTime?
-  roomPreferences   RoomPreferences @relation(fields: [roomPreferencesId], references: [id])
-  roomPreferencesId Int             @unique
-  entries           Entry[]
+  id              Int              @id @default(autoincrement())
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  start           DateTime?
+  end             DateTime?
+  roomPreferences RoomPreferences?
+  entries         Entry[]
 }
 
 model RoomPreferences {
@@ -26,7 +25,8 @@ model RoomPreferences {
   title          String   @db.VarChar(255)
   description    String?
   code           String?  @db.VarChar(20)
-  room           Room?
+  room           Room     @relation(fields: [roomId], references: [id])
+  roomId         Int      @unique
 }
 
 model Entry {
