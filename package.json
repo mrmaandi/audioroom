@@ -11,15 +11,18 @@
     "@headlessui/react": "^1.4.2",
     "@heroicons/react": "^1.0.5",
     "@prisma/client": "^3.7.0",
+    "classnames": "^2.3.1",
+    "contentful": "^9.1.5",
     "framer-motion": "^4.1.17",
     "next": "latest",
     "next-auth": "^4.0.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "tailwind-scrollbar-hide": "^1.1.6"
+    "recoil": "^0.5.2"
   },
   "devDependencies": {
     "@types/react": "^17.0.37",
+    "@types/tailwindcss": "^3.0.2",
     "autoprefixer": "^10.2.6",
     "postcss": "^8.3.5",
     "prisma": "^3.7.0",

@@ -1,12 +1,16 @@
+import Link from "next/link";
+
 const LandingSection = () => {
   return (
     <div className="m-auto">
-      <div className="flex flex-col gap-5 text-center">
+      <div className="flex flex-col items-center gap-5">
+        {/* <img src="/logo.svg" alt="Logo" width={100}/> */}
+        {/* <img src="/logo2.svg" alt="Logo" /> */}
         <h1 className="text-5xl font-extrabold">Audioroom</h1>
-        <p className="text-xl">Space for creative minds</p>
-        <button className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
-          Explore
-        </button>
+        <p className="text-xl">The space for creative minds</p>
+        <Link href="/library">
+          <a className="uppercase border-white bg-white hover:bg-slate-100 text-gray-800 font-semibold py-2 px-4 border rounded-full shadow">Start exploring</a>
+        </Link>
       </div>
     </div>
   );
