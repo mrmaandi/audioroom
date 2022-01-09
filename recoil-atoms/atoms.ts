@@ -6,7 +6,6 @@ export const textState = atom({
 });
 
 export const burgerMenuState = atom({
-    key: "burgerMenuState",
-    default: false,
-  });
-  
+  key: "burgerMenuState",
+  default: false,
+});

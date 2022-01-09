@@ -8,7 +8,7 @@ import MainContent from "../components/MainContent";
 export default function Home() {
   return (
     <div>
-      <main className="font-poppins font-bold">
+      <main>
         <div className="flex flex-col h-screen text-white bg-noiselab bg-fixed bg-no-repeat bg-cover bg-center">
           <div className="flex">
             <Header />
@@ -17,7 +17,7 @@ export default function Home() {
             <LandingSection />
           </div>
           <div className="flex justify-center py-5">
-            <ChevronDownIcon className="h-6" />
+            <ChevronDownIcon className="animate-bounce h-6" />
           </div>
         </div>
         <MainContent />

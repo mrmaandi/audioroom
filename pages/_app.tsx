@@ -10,7 +10,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>Audioroom</title>
       </Head>
       <RecoilRoot>
-        <Component {...pageProps} />
+        <div className="font-poppins font-bold">
+          <Component {...pageProps} />
+        </div>
       </RecoilRoot>
     </>
   );
