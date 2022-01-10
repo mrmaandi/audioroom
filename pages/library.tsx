@@ -1,6 +1,7 @@
 import { Room } from "@prisma/client";
 import { GetStaticPropsContext } from "next";
 import Header from "../components/Header";
+import Button from "../components/ui/Button";
 import { getRooms } from "../database/database";
 
 interface Props {
@@ -10,11 +11,15 @@ interface Props {
 function Library({ data }: Props) {
   return (
     <div>
-      <div className="sticky top-0 bg-white">
+      <div className="sticky top-0 bg-slate-100 border-y-2 text-slate-700">
         <Header />
       </div>
       <div className="md:container md:mx-auto h-screen px-6 md:px-0">
-        <h1 className="text-3xl my-6">Library</h1>
+        <div className="flex items-center">
+          <h1 className="text-3xl my-6">Library</h1>
+          <div className="flex-grow"></div>
+          <Button text="Add room" path="/add-room" />
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {data.length === 0 && <p>No data found</p>}
           {data.map((room) => (
@@ -24,7 +29,7 @@ function Library({ data }: Props) {
             </div>
           ))}
         </div>
-        <div className="h-screen">other</div>
+        {/* <div className="h-screen">other</div> */}
       </div>
     </div>
   );

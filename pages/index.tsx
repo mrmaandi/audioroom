@@ -11,7 +11,7 @@ export default function Home() {
       <main>
         <div className="flex flex-col h-screen text-white bg-noiselab bg-fixed bg-no-repeat bg-cover bg-center">
           <div className="flex">
-            <Header />
+            <Header isMain />
           </div>
           <div className="flex flex-grow">
             <LandingSection />

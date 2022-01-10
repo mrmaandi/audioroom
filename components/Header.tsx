@@ -3,13 +3,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useRecoilState } from "recoil";
 import { burgerMenuState } from "../recoil-atoms/atoms";
+import Button from "./ui/Button";
 
 interface NavPath {
   name: string;
   link: string;
 }
 
-const paths: NavPath[] = [
+export const navPaths: NavPath[] = [
   {
     name: "Library",
     link: "/library",
@@ -24,7 +25,7 @@ const paths: NavPath[] = [
   },
 ];
 
-function Header() {
+function Header(props: {isMain?: boolean}) {
   const [isOpen, setIsOpen] = useRecoilState(burgerMenuState);
 
   const toggleMenu = () => {
@@ -47,15 +48,24 @@ function Header() {
           exit="hidden"
           className="absolute left-0 top-0"
         >
-          <div className="h-screen bg-slate-500">
-            <div className="flex flex-col">
-              {paths.map((path, index) => (
+          <div className="bg-slate-500">
+            <div className="flex flex-col h-screen content-end">
+
+                <Link href="/">
+                  <div className="block mt-20 pl-6 py-6 text-white bg-slate-700 font-semibold text-lg" onClick={toggleMenu}>
+                    Home
+                  </div>
+                </Link>
+              <div className="flex flex-grow"></div>
+              <div className="flex flex-col pb-20">
+              {navPaths.map((path, index) => (
                 <Link href={path.link} key={index}>
                   <div className="block pl-6 py-6 text-white bg-slate-700 font-semibold text-lg" onClick={toggleMenu}>
                     {path.name}
                   </div>
                 </Link>
               ))}
+              </div>
             </div>
           </div>
         </motion.div>
@@ -64,7 +74,7 @@ function Header() {
   );
 
   return (
-    <div className="w-full py-6 px-6 md:px-0">
+    <div className="w-full py-4 px-6 md:px-0">
       <div className="md:container md:mx-auto">
         <div className="flex justify-between items-center uppercase">
           <div>
@@ -76,11 +86,14 @@ function Header() {
           </div>
           <div>
             <div className="hidden sm:flex">
-              <div className="grid grid-flow-col gap-x-8">
-                {paths.map((path, index) => (
+              <div className="grid grid-flow-col items-center gap-x-8 text-lg">
+                {navPaths.filter((path) => path.name !== 'Sign in').map((path, index) => (
                   <Link key={index} href={path.link}>
                     {path.name}
                   </Link>
+                ))}
+                {navPaths.filter((path) => path.name === 'Sign in').map((path, index) => (
+                  <Button text="Sign in" path={path.link} isOutlined style={props.isMain ? 'white': 'primary'}/>
                 ))}
               </div>
             </div>

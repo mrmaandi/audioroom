@@ -1,5 +1,3 @@
-import { useRecoilState } from "recoil";
-import { textState } from "../recoil-atoms/atoms";
 
 const MainContent = () => {
   return (
