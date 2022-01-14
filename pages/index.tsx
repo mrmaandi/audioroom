@@ -17,7 +17,10 @@ export default function Home() {
             <LandingSection />
           </div>
           <div className="flex justify-center py-5">
+            <div className="flex flex-col gap-2">
+            <p>Find out what we're about</p>
             <ChevronDownIcon className="animate-bounce h-6" />
+            </div>
           </div>
         </div>
         <MainContent />

@@ -1,9 +1,9 @@
+import { Button } from "@chakra-ui/react";
 import { MenuIcon } from "@heroicons/react/outline";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useRecoilState } from "recoil";
 import { burgerMenuState } from "../recoil-atoms/atoms";
-import Button from "./ui/Button";
 
 interface NavPath {
   name: string;
@@ -93,7 +93,7 @@ function Header(props: {isMain?: boolean}) {
                   </Link>
                 ))}
                 {navPaths.filter((path) => path.name === 'Sign in').map((path, index) => (
-                  <Button text="Sign in" path={path.link} isOutlined style={props.isMain ? 'white': 'primary'}/>
+                  <Link href={path.link}><Button fontWeight="normal" variant="outline" _hover={{bg: 'white', color: 'black'}}>Sign in</Button></Link>
                 ))}
               </div>
             </div>

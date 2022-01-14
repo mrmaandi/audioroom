@@ -1,3 +1,4 @@
+import { ChakraProvider } from "@chakra-ui/react";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { RecoilRoot } from "recoil";
@@ -10,9 +11,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>Audioroom</title>
       </Head>
       <RecoilRoot>
-        <div className="font-poppins font-bold">
-          <Component {...pageProps} />
-        </div>
+        <ChakraProvider>
+          <div className="font-poppins font-bold">
+            <Component {...pageProps} />
+          </div>
+        </ChakraProvider>
       </RecoilRoot>
     </>
   );
