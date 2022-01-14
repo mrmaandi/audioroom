@@ -10,7 +10,7 @@ export default function Home() {
     <div>
       <main>
         <div className="flex flex-col h-screen text-white bg-noiselab bg-fixed bg-no-repeat bg-cover bg-center">
-          <div className="flex">
+          <div>
             <Header isMain />
           </div>
           <div className="flex flex-grow">
@@ -18,8 +18,8 @@ export default function Home() {
           </div>
           <div className="flex justify-center py-5">
             <div className="flex flex-col gap-2">
-            <p>Find out what we're about</p>
-            <ChevronDownIcon className="animate-bounce h-6" />
+              <p>Find out what we're about</p>
+              <ChevronDownIcon className="animate-bounce h-6" />
             </div>
           </div>
         </div>

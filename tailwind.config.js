@@ -15,7 +15,7 @@ module.exports = {
       },
       backgroundImage: {
         'noiselab': "linear-gradient(to left bottom, rgba(0, 30, 45, 0.8), rgba(43, 108, 176, 0.2)), url('/noiselab.jpg')"
-      }
+      },
     },
   },
   variants: {
