@@ -41,7 +41,7 @@ function Header(props: { isMain?: boolean }) {
 
   const MobileMenu = () => (
     <div className="relative z-10">
-      <div className="absolute inset-y-0 left-0">
+      <div className="absolute inset-0">
         <AnimatePresence>
           {isOpen && (
             <motion.div
