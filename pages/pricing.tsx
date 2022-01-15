@@ -1,13 +1,13 @@
-import Header from "../components/Header"
+import Header from "../components/Header";
 
 const Pricing = () => {
-    return (
-        <div>
-            <div className="flex">
-            <Header />
-            </div>
-        </div>
-    )
-}
+  return (
+    <div>
+      <div className="flex">
+        <Header />
+      </div>
+    </div>
+  );
+};
 
-export default Pricing
+export default Pricing;

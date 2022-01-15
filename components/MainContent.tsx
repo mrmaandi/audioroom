@@ -9,11 +9,10 @@ const MainContent = () => {
           <Center h="full">
             <Box>
               <VStack spacing={6} align="stretch">
-                <h1 className="text-5xl font-extrabold pb-5">Connect with producers</h1>
+                <h1 className="text-5xl font-extrabold pb-5">Connect with people</h1>
                 <p className="text-lg text-slate-600">
                   Sample flippers, music producers and others alike — this is to whom Audioroom is
-                  created for. It's a place to create challenges and find other producers to join
-                  your challenges.
+                  created for. It's a place to join and create challenges and find other producers to collaborate with.
                 </p>
               </VStack>
             </Box>

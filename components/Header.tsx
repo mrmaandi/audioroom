@@ -1,4 +1,4 @@
-import { Button } from "@chakra-ui/react";
+import { Button, Container } from "@chakra-ui/react";
 import { MenuIcon } from "@heroicons/react/outline";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
@@ -9,6 +9,8 @@ import { burgerMenuState } from "../recoil-atoms/atoms";
 interface NavPath {
   name: string;
   link: string;
+  showOnMobile?: boolean;
+  isButton?: boolean;
 }
 
 export const navPaths: NavPath[] = [
@@ -23,6 +25,7 @@ export const navPaths: NavPath[] = [
   {
     name: "Sign in",
     link: "/signin",
+    isButton: true,
   },
 ];
 
@@ -85,8 +88,8 @@ function Header(props: { isMain?: boolean }) {
 
   return (
     <>
-      <div className="w-full py-4 px-6 md:px-0">
-        <div className="md:container md:mx-auto">
+      <div className="w-full py-4 md:px-0">
+        <Container maxW="container.xl">
           <div className="flex justify-between items-center uppercase">
             <div>
               <Link href="/">
@@ -98,26 +101,24 @@ function Header(props: { isMain?: boolean }) {
             <div>
               <div className="hidden sm:flex">
                 <div className="grid grid-flow-col items-center gap-x-8 text-lg">
-                  {navPaths
-                    .filter((path) => path.name !== "Sign in")
-                    .map((path, index) => (
+                  {navPaths.map((path, index) =>
+                    !path.isButton ? (
                       <Link key={index} href={path.link}>
                         {path.name}
                       </Link>
-                    ))}
-                  {navPaths
-                    .filter((path) => path.name === "Sign in")
-                    .map((path, index) => (
+                    ) : (
                       <Button
                         key={index}
                         fontWeight="normal"
+                        textTransform="uppercase"
                         variant="outline"
                         _hover={{ bg: "white", color: "black" }}
                         onClick={() => router.push(path.link)}
                       >
-                        Sign in
+                        {path.name}
                       </Button>
-                    ))}
+                    )
+                  )}
                 </div>
               </div>
               <div className="sm:hidden">
@@ -125,7 +126,7 @@ function Header(props: { isMain?: boolean }) {
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </div>
       <div className="sm:hidden">
         <MobileMenu />

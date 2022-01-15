@@ -1,9 +1,10 @@
-import { Button } from "@chakra-ui/react";
+import { Button, Container } from "@chakra-ui/react";
 import { Room } from "@prisma/client";
+import { format, parse, parseISO } from "date-fns";
 import { GetStaticPropsContext } from "next";
 import { useRouter } from "next/router";
 import Header from "../components/Header";
-import { getRooms } from "../database/database";
+import { getRooms } from "../database/requests";
 
 interface Props {
   data: Room[];
@@ -17,7 +18,7 @@ function Library({ data }: Props) {
       <div className="sticky top-0 bg-white z-10 text-slate-700">
         <Header />
       </div>
-      <div className="md:container md:mx-auto h-screen px-6 md:px-0">
+      <Container maxW="container.xl">
         <div className="flex items-center">
           <h1 className="text-3xl my-6">Library</h1>
           <div className="flex-grow"></div>
@@ -34,12 +35,13 @@ function Library({ data }: Props) {
           {data.length === 0 && <p>No data found</p>}
           {data.map((room) => (
             <div className="border rounded bg-white">
-              <h1 className="text-lg">{room.id}</h1>
-              <p className="text-sm">{room.createdAt}</p>
+              <h1 className="text-lg">{room.roomPreferences.title}</h1>
+              <p className="text-md">{room.roomPreferences.description}</p>
+              <p className="text-sm">Start at {room.start && format(parseISO(room.start.toString()), "yyyy-MM-dd HH:mm")}</p>
             </div>
           ))}
         </div>
-      </div>
+      </Container>
     </div>
   );
 }
