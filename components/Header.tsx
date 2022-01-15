@@ -1,4 +1,18 @@
-import { Button, Container } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  Input,
+  useDisclosure,
+  VStack,
+} from "@chakra-ui/react";
 import { MenuIcon } from "@heroicons/react/outline";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
@@ -30,61 +44,36 @@ export const navPaths: NavPath[] = [
 ];
 
 function Header(props: { isMain?: boolean }) {
-  const [isOpen, setIsOpen] = useRecoilState(burgerMenuState);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const MobileMenu = () => {
+    return (
+      <Drawer isOpen={isOpen} onClose={onClose}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader></DrawerHeader>
 
-  const variants = {
-    hidden: { width: "0%" },
-    shown: { width: "calc(100vw - 30%)" },
-  };
+          <DrawerBody>
+          <VStack spacing={10} align="stretch">
+            {navPaths.map((path, index) => (
+              <Link href={path.link} key={index}>
+                <Box onClick={onClose}>{path.name}</Box>
+              </Link>
+            ))}
+            </VStack>
+          </DrawerBody>
 
-  const MobileMenu = () => (
-    <div className="relative z-10">
-      <div className="absolute inset-0">
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              key="motion-menu"
-              variants={variants}
-              initial="hidden"
-              animate="shown"
-              exit="hidden"
-            >
-              <div className="bg-slate-500">
-                <div className="flex flex-col h-screen">
-                  <Link href="/">
-                    <div
-                      className="block mt-20 pl-6 py-6 text-white bg-slate-700 font-semibold text-lg"
-                      onClick={toggleMenu}
-                    >
-                      Home
-                    </div>
-                  </Link>
-                  <div className="flex flex-grow"></div>
-                  <div className="flex flex-col pb-20">
-                    {navPaths.map((path, index) => (
-                      <Link href={path.link} key={index}>
-                        <div
-                          className="block pl-6 py-6 text-white bg-slate-700 font-semibold text-lg"
-                          onClick={toggleMenu}
-                        >
-                          {path.name}
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </div>
-  );
+          <DrawerFooter>
+            <Button type="submit" form="my-form">
+              Save
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    );
+  };
 
   return (
     <>
@@ -112,6 +101,7 @@ function Header(props: { isMain?: boolean }) {
                         fontWeight="normal"
                         textTransform="uppercase"
                         variant="outline"
+                        fontSize="lg"
                         _hover={{ bg: "white", color: "black" }}
                         onClick={() => router.push(path.link)}
                       >
@@ -122,7 +112,7 @@ function Header(props: { isMain?: boolean }) {
                 </div>
               </div>
               <div className="sm:hidden">
-                <MenuIcon className="h-10" onClick={toggleMenu} />
+                <MenuIcon className="h-10" onClick={onOpen} />
               </div>
             </div>
           </div>

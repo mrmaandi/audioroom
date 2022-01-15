@@ -16,6 +16,7 @@ const LandingSection = () => {
               bg="white"
               fontWeight="normal"
               color="black"
+              size="lg"
               onClick={() => router.push("/library")}
             >
               Start Exploring

@@ -3,6 +3,7 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import { RecoilRoot } from "recoil";
 import "tailwindcss/tailwind.css";
+import CookieNotice from "../components/CookieNotice";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -14,6 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ChakraProvider>
           <div className="font-poppins font-bold">
             <Component {...pageProps} />
+            {/* <CookieNotice /> */}
           </div>
         </ChakraProvider>
       </RecoilRoot>

@@ -1,8 +1,25 @@
-import { Button, Container } from "@chakra-ui/react";
+import {
+  Badge,
+  Box,
+  Button,
+  Center,
+  chakra,
+  Circle,
+  Container,
+  Flex,
+  Grid,
+  GridItem,
+  Icon,
+  Image,
+  Tooltip,
+  useColorModeValue,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { Room } from "@prisma/client";
-import { format, parse, parseISO } from "date-fns";
-import { GetStaticPropsContext } from "next";
+import { format, parseISO } from "date-fns";
+import { GetServerSidePropsContext } from "next";
 import { useRouter } from "next/router";
+import CreateRoomDrawer from "../components/CreateRoomDrawer";
 import Header from "../components/Header";
 import { getRooms } from "../database/requests";
 
@@ -10,8 +27,52 @@ interface Props {
   data: Room[];
 }
 
+const RoomCard = (props: { room: Room }) => {
+  const { room } = props;
+
+  return (
+    <Box
+      bg={useColorModeValue("white", "gray.800")}
+      w="full"
+      borderWidth="1px"
+      rounded="lg"
+      shadow="lg"
+      position="relative"
+      height="full"
+      p="6"
+    >
+      {/* <Box w="100%" h="200px" bgGradient="linear(to-br, blue.300, teal.500)">
+          <Center height="full" fontSize="2xl" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated textColor="white">{(room as any).roomPreferences.title}</Center>
+        </Box> */}
+
+      <Box>
+        <Box fontSize="2xl" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated>
+          {(room as any).roomPreferences.title}
+        </Box>
+      </Box>
+
+      <Box fontSize="md" textColor="text-slate-600" as="h4" lineHeight="tight" isTruncated>
+          {(room as any).roomPreferences.description}
+        </Box>
+
+      <Box mt={1}>
+        <Box>
+          Start: {room.start && format(parseISO(room.start.toString()), "yyyy-MM-dd HH:mm")}
+        </Box>
+      </Box>
+
+      <Box mt={1} d="flex" alignItems="baseline" mb={2}>
+        <Badge rounded="full" px="2" fontSize="0.8em" colorScheme="green">
+          In progress
+        </Badge>
+      </Box>
+    </Box>
+  );
+};
+
 function Library({ data }: Props) {
   const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <div>
@@ -26,32 +87,30 @@ function Library({ data }: Props) {
             fontWeight="normal"
             variant="outline"
             _hover={{ bg: "white", color: "black" }}
-            onClick={() => router.push("/createroom")}
+            onClick={onOpen}
           >
             Create Room
           </Button>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <Grid templateColumns={{ md: "repeat(2, 1fr)" }} gap={5} py={5}>
           {data.length === 0 && <p>No data found</p>}
-          {data.map((room) => (
-            <div className="border rounded bg-white">
-              <h1 className="text-lg">{(room as any).roomPreferences.title}</h1>
-              <p className="text-md">{(room as any).roomPreferences.description}</p>
-              <p className="text-sm">Start at {room.start && format(parseISO(room.start.toString()), "yyyy-MM-dd HH:mm")}</p>
-            </div>
+          {data.map((room, index) => (
+            <GridItem key={index}>
+              <RoomCard room={room} />
+            </GridItem>
           ))}
-        </div>
+        </Grid>
       </Container>
+      <CreateRoomDrawer isOpen={isOpen} onClose={onClose} onOpen={onOpen} />
     </div>
   );
 }
 
-export async function getStaticProps(context: GetStaticPropsContext) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const allRooms: Room[] = await getRooms();
 
   return {
     props: { data: JSON.parse(JSON.stringify(allRooms)) },
-    revalidate: 2
   };
 }
 
