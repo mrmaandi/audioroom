@@ -14,7 +14,7 @@ module.exports = {
         "extra-bold": "700"
       },
       backgroundImage: {
-        'noiselab': "linear-gradient(to left bottom, rgba(0, 30, 45, 0.8), rgba(43, 108, 176, 0.2)), url('/noiselab.jpg')"
+        'noiselab': "linear-gradient(to right bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)), url('/img/bg.jpg')"
       },
     },
   },

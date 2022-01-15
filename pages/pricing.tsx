@@ -8,6 +8,8 @@ import {
   ListIcon,
   Button,
   Text,
+  Flex,
+  Container,
 } from "@chakra-ui/react";
 import { CheckIcon } from "@heroicons/react/outline";
 import Header from "../components/Header";
@@ -93,13 +95,13 @@ const PlanCard = () => {
 
 const Pricing = () => {
   return (
-    <div>
-      <div className="flex">
-        <Header />
-      </div>
-      <h1>Pricing</h1>
-      <PlanCard />
-    </div>
+    <Container maxW="container.xl">
+      <Center>
+        <Flex>
+          <PlanCard />
+        </Flex>
+      </Center>
+    </Container>
   );
 };
 

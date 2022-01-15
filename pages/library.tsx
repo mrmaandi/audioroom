@@ -11,6 +11,7 @@ import {
   GridItem,
   Icon,
   Image,
+  Input,
   Tooltip,
   useColorModeValue,
   useDisclosure,
@@ -52,8 +53,8 @@ const RoomCard = (props: { room: Room }) => {
       </Box>
 
       <Box fontSize="md" textColor="text-slate-600" as="h4" lineHeight="tight" isTruncated>
-          {(room as any).roomPreferences.description}
-        </Box>
+        {(room as any).roomPreferences.description}
+      </Box>
 
       <Box mt={1}>
         <Box>
@@ -71,14 +72,10 @@ const RoomCard = (props: { room: Room }) => {
 };
 
 function Library({ data }: Props) {
-  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <div>
-      <div className="sticky top-0 bg-white z-10 text-slate-700">
-        <Header />
-      </div>
       <Container maxW="container.xl">
         <div className="flex items-center">
           <h1 className="text-3xl my-6">Library</h1>
@@ -92,6 +89,7 @@ function Library({ data }: Props) {
             Create Room
           </Button>
         </div>
+        <Input type="search" placeholder='Search' />
         <Grid templateColumns={{ md: "repeat(2, 1fr)" }} gap={5} py={5}>
           {data.length === 0 && <p>No data found</p>}
           {data.map((room, index) => (

@@ -1,22 +1,27 @@
 import {
-    Button, Drawer,
-    DrawerBody,
-    DrawerCloseButton,
-    DrawerContent,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerOverlay,
-    FormControl,
-    FormHelperText,
-    FormLabel,
-    Input,
-    Switch,
-    Textarea, useToast,
-    VStack
+  Box,
+  Button,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  Flex,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Input,
+  Switch,
+  Textarea,
+  useToast,
+  VStack,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { CreateRoomRequest } from "../database/requests";
+import Dropzone from "./Dropzone";
 
 const CreateRoomDrawer = (props: { isOpen: boolean; onClose: () => void; onOpen: () => void }) => {
   const toast = useToast();
@@ -29,6 +34,7 @@ const CreateRoomDrawer = (props: { isOpen: boolean; onClose: () => void; onOpen:
   const [endDateTime, setEndDateTime] = useState(new Date());
   const [isPrivate, setIsPrivate] = useState(false);
   const [makePublicAfterEnd, setMakePublicAfterEnd] = useState(false);
+  const [audioSample, setAudioSample] = useState<File>();
 
   const clearValues = () => {
     setTitle("");
@@ -37,9 +43,10 @@ const CreateRoomDrawer = (props: { isOpen: boolean; onClose: () => void; onOpen:
     setEndDateTime(new Date());
     setIsPrivate(false);
     setMakePublicAfterEnd(false);
+    setAudioSample(undefined);
   };
 
-  const onCreate = () => {
+  const onRoomCreate = () => {
     const request: CreateRoomRequest = {
       title: title,
       description: description,
@@ -78,13 +85,18 @@ const CreateRoomDrawer = (props: { isOpen: boolean; onClose: () => void; onOpen:
       );
   };
 
+  const onFileAccepted = (file: File) => {
+    setAudioSample(file);
+    console.log(file);
+  };
+
   return (
     <Drawer isOpen={isOpen} onClose={onClose}>
       <form
         id="create-room-form"
         onSubmit={(e) => {
           e.preventDefault();
-          onCreate();
+          onRoomCreate();
         }}
       >
         <DrawerOverlay />
@@ -125,34 +137,48 @@ const CreateRoomDrawer = (props: { isOpen: boolean; onClose: () => void; onOpen:
                 <FormLabel>End date</FormLabel>
                 <Input id="endDateTime" type="datetime-local" />
               </FormControl>
-              <FormControl display="flex" alignItems="center">
-                <FormLabel htmlFor="privateRoom">Private room</FormLabel>
-                <Switch id="privateRoom" size="lg" />
+
+              <FormControl display="flex" flexDirection="column">
+                <FormLabel>Audio sample</FormLabel>
+                <Dropzone onFileAccepted={onFileAccepted} />
+              </FormControl>
+
+              <FormControl alignItems="center">
+                <Box display="flex">
+                  <FormLabel htmlFor="privateRoom">Private room</FormLabel>
+                  <Switch id="privateRoom" size="lg" />
+                </Box>
+                <FormHelperText>
+                  If toggled on, your room will be not be seen publically
+                </FormHelperText>
               </FormControl>
               <FormControl display="flex" alignItems="center">
                 <FormLabel>Public after end</FormLabel>
                 <Switch id="publicAfterEnd" size="lg" />
               </FormControl>
-              <Button
-                type="submit"
-                form="create-room-form"
-                fontWeight="normal"
-                textTransform="uppercase"
-              >
-                Create
-              </Button>
-              <Button
-                variant="outline"
-                fontWeight="normal"
-                textTransform="uppercase"
-                onClick={clearValues}
-              >
-                Clear
-              </Button>
             </VStack>
           </DrawerBody>
 
-          <DrawerFooter></DrawerFooter>
+          <DrawerFooter borderTopWidth="1px">
+            <Button
+              variant="outline"
+              fontWeight="normal"
+              textTransform="uppercase"
+              onClick={clearValues}
+              mr={3} 
+            >
+              Clear
+            </Button>
+            <Button
+              type="submit"
+              colorScheme="blue"
+              form="create-room-form"
+              fontWeight="normal"
+              textTransform="uppercase"
+            >
+              Create
+            </Button>
+          </DrawerFooter>
         </DrawerContent>
       </form>
     </Drawer>

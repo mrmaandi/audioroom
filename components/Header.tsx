@@ -59,17 +59,11 @@ function Header(props: { isMain?: boolean }) {
           <VStack spacing={10} align="stretch">
             {navPaths.map((path, index) => (
               <Link href={path.link} key={index}>
-                <Box onClick={onClose}>{path.name}</Box>
+                <Box onClick={onClose} fontSize="lg" fontWeight="semibold">{path.name}</Box>
               </Link>
             ))}
             </VStack>
           </DrawerBody>
-
-          <DrawerFooter>
-            <Button type="submit" form="my-form">
-              Save
-            </Button>
-          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     );
