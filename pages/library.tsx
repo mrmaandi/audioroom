@@ -51,6 +51,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 
   return {
     props: { data: JSON.parse(JSON.stringify(allRooms)) },
+    revalidate: 2
   };
 }
 
