@@ -35,8 +35,8 @@ function Library({ data }: Props) {
           {data.length === 0 && <p>No data found</p>}
           {data.map((room) => (
             <div className="border rounded bg-white">
-              <h1 className="text-lg">{room.roomPreferences.title}</h1>
-              <p className="text-md">{room.roomPreferences.description}</p>
+              <h1 className="text-lg">{(room as any).roomPreferences.title}</h1>
+              <p className="text-md">{(room as any).roomPreferences.description}</p>
               <p className="text-sm">Start at {room.start && format(parseISO(room.start.toString()), "yyyy-MM-dd HH:mm")}</p>
             </div>
           ))}
