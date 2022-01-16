@@ -31,4 +31,5 @@ export default NextAuth({
       return session;
     },
   },
+  debug: true,
 });

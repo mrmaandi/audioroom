@@ -11,6 +11,13 @@ export default (request, response) => {
   
   const req = request.body;
   const { cookies } = request 
+
+
+  if (!cookies['next-auth.session-token']) {
+    response.status(400).send({ message: "No session token" });
+    return;
+  }
+
   const ses = prisma.session.findUnique({
     where: { sessionToken: cookies['next-auth.session-token'] },
   });
@@ -37,5 +44,4 @@ export default (request, response) => {
       response.status(200).json(res);
     });
   })
-
 }
