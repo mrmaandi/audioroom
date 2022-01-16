@@ -6,19 +6,15 @@ import {
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  Input,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import { MenuIcon } from "@heroicons/react/outline";
-import { AnimatePresence, motion } from "framer-motion";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useRecoilState } from "recoil";
-import { burgerMenuState } from "../recoil-atoms/atoms";
 
 interface NavPath {
   name: string;
@@ -45,6 +41,7 @@ export const navPaths: NavPath[] = [
 
 function Header(props: { isMain?: boolean }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { data: session } = useSession();
   const router = useRouter();
 
   const MobileMenu = () => {
@@ -56,16 +53,41 @@ function Header(props: { isMain?: boolean }) {
           <DrawerHeader></DrawerHeader>
 
           <DrawerBody>
-          <VStack spacing={10} align="stretch">
-            {navPaths.map((path, index) => (
-              <Link href={path.link} key={index}>
-                <Box onClick={onClose} fontSize="lg" fontWeight="semibold">{path.name}</Box>
-              </Link>
-            ))}
+            <VStack spacing={10} align="stretch">
+              {navPaths.map((path, index) => (
+                <Link href={path.link} key={index}>
+                  <Box onClick={onClose} fontSize="lg" fontWeight="semibold">
+                    {path.name}
+                  </Box>
+                </Link>
+              ))}
             </VStack>
           </DrawerBody>
         </DrawerContent>
       </Drawer>
+    );
+  };
+
+  const AuthButton = () => {
+    if (session) {
+      return (
+        <>
+          Signed in as {session.user?.name} <br />
+          <button onClick={() => signOut()}>Sign out</button>
+        </>
+      );
+    }
+    return (
+      <Button
+        fontWeight="normal"
+        textTransform="uppercase"
+        variant="outline"
+        fontSize="lg"
+        _hover={{ bg: "white", color: "black" }}
+        onClick={() => signIn()}
+      >
+        Sign in
+      </Button>
     );
   };
 
@@ -84,25 +106,15 @@ function Header(props: { isMain?: boolean }) {
             <div>
               <div className="hidden sm:flex">
                 <div className="grid grid-flow-col items-center gap-x-8 text-lg">
-                  {navPaths.map((path, index) =>
-                    !path.isButton ? (
-                      <Link key={index} href={path.link}>
-                        {path.name}
-                      </Link>
-                    ) : (
-                      <Button
-                        key={index}
-                        fontWeight="normal"
-                        textTransform="uppercase"
-                        variant="outline"
-                        fontSize="lg"
-                        _hover={{ bg: "white", color: "black" }}
-                        onClick={() => router.push(path.link)}
-                      >
-                        {path.name}
-                      </Button>
-                    )
+                  {navPaths.map(
+                    (path, index) =>
+                      !path.isButton && (
+                        <Link key={index} href={path.link}>
+                          {path.name}
+                        </Link>
+                      )
                   )}
+                  <AuthButton />
                 </div>
               </div>
               <div className="sm:hidden">

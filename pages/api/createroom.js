@@ -10,23 +10,32 @@ export default (request, response) => {
   }
   
   const req = request.body;
+  const { cookies } = request 
+  const ses = prisma.session.findUnique({
+    where: { sessionToken: cookies['next-auth.session-token'] },
+  });
 
-  prisma.room.create({
-    data: {
-      start: req.startDateTime,
-      end: req.endDateTime,
-      createdBy: 1,
-      roomPreferences: {
-        create: {
-          title: req.title,
-          description: req.description,
-          private: req.isPrivate,
-          publicAfterEnd: req.makePublicAfterEnd,
-          audioSample: ''
+  ses.then((result) => {
+    console.log(result.userId);
+
+    prisma.room.create({
+      data: {
+        start: req.startDateTime,
+        end: req.endDateTime,
+        createdBy: result.userId,
+        roomPreferences: {
+          create: {
+            title: req.title,
+            description: req.description,
+            private: req.isPrivate,
+            publicAfterEnd: req.makePublicAfterEnd,
+            audioSample: ''
+          },
         },
       },
-    },
-  }).then((res) => {
-    response.status(200).json(res);
-  });
+    }).then((res) => {
+      response.status(200).json(res);
+    });
+  })
+
 }

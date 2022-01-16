@@ -8,76 +8,119 @@ datasource db {
 }
 
 model Room {
-  id              Int              @id @default(autoincrement())
+  id              String           @id @default(cuid())
   createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
+  updatedAt       DateTime         @default(now()) @updatedAt
   start           DateTime?
   end             DateTime?
   roomPreferences RoomPreferences?
   entries         Entry[]
   User            User             @relation(fields: [createdBy], references: [id])
-  createdBy       Int
+  createdBy       String
 }
 
 model RoomPreferences {
-  id             Int      @id @default(autoincrement())
-  updatedAt      DateTime @updatedAt
+  id             String   @id @default(cuid())
+  updatedAt      DateTime @default(now()) @updatedAt
   private        Boolean  @default(false)
   publicAfterEnd Boolean  @default(true)
   title          String   @db.VarChar(255)
   description    String?
   code           String?  @db.VarChar(20)
   room           Room     @relation(fields: [roomId], references: [id])
-  roomId         Int      @unique
+  roomId         String   @unique
   audioSample    String?
 }
 
 model Entry {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
   room      Room     @relation(fields: [roomId], references: [id])
-  roomId    Int      @unique
+  roomId    String   @unique
   User      User     @relation(fields: [userId], references: [id])
-  userId    Int      @unique
-}
-
-model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  active    Boolean  @default(true)
-  profile   Profile?
-  entries   Entry[]
-  rooms     Room[]
+  userId    String   @unique
 }
 
 model Profile {
-  id        Int      @id @default(autoincrement())
+  id        String      @id @default(cuid())
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
   name      String?
   bio       String?
   user      User     @relation(fields: [userId], references: [id])
-  userId    Int      @unique
+  userId    String      @unique
   socials   Social[]
 }
 
 model Social {
-  id         Int                  @id @default(autoincrement())
+  id         String                  @id @default(cuid())
   createdAt  DateTime             @default(now())
-  updatedAt  DateTime             @updatedAt
+  updatedAt  DateTime             @default(now()) @updatedAt
   platform   SocialMediaPlatform? @relation(fields: [platformId], references: [id])
-  platformId Int?
+  platformId String?
   name       String?
   link       String?
   profile    Profile              @relation(fields: [profileId], references: [id])
-  profileId  Int                  @unique
+  profileId  String                  @unique
 }
 
 model SocialMediaPlatform {
-  id     Int      @id @default(autoincrement())
+  id     String      @id @default(cuid())
   name   String
   icon   String?
   social Social[]
+}
+
+// NextAuth Prisma Adapter
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String? @db.Text
+  access_token       String? @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.Text
+  session_state      String?
+  oauth_token_secret String?
+  oauth_token        String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+
+  profile Profile?
+  entries Entry[]
+  rooms   Room[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }

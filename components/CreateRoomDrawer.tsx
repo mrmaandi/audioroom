@@ -20,13 +20,16 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useRecoilState } from "recoil";
 import { CreateRoomRequest } from "../database/requests";
+import { audioSampleState } from "../recoil-atoms/atoms";
 import Dropzone from "./Dropzone";
 
 const CreateRoomDrawer = (props: { isOpen: boolean; onClose: () => void; onOpen: () => void }) => {
   const toast = useToast();
   const { isOpen, onClose, onOpen } = props;
   const router = useRouter();
+  const [audioSample, setAudioSample] = useRecoilState(audioSampleState);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -34,7 +37,6 @@ const CreateRoomDrawer = (props: { isOpen: boolean; onClose: () => void; onOpen:
   const [endDateTime, setEndDateTime] = useState(new Date());
   const [isPrivate, setIsPrivate] = useState(false);
   const [makePublicAfterEnd, setMakePublicAfterEnd] = useState(false);
-  const [audioSample, setAudioSample] = useState<File>();
 
   const clearValues = () => {
     setTitle("");
@@ -85,13 +87,8 @@ const CreateRoomDrawer = (props: { isOpen: boolean; onClose: () => void; onOpen:
       );
   };
 
-  const onFileAccepted = (file: File) => {
-    setAudioSample(file);
-    console.log(file);
-  };
-
   return (
-    <Drawer isOpen={isOpen} onClose={onClose}>
+    <Drawer isOpen={isOpen} onClose={onClose} size="md">
       <form
         id="create-room-form"
         onSubmit={(e) => {
@@ -136,11 +133,15 @@ const CreateRoomDrawer = (props: { isOpen: boolean; onClose: () => void; onOpen:
               <FormControl>
                 <FormLabel>End date</FormLabel>
                 <Input id="endDateTime" type="datetime-local" />
+                <FormHelperText>
+                  Don't set if you want to keep submittions open forever
+                </FormHelperText>
               </FormControl>
 
               <FormControl display="flex" flexDirection="column">
                 <FormLabel>Audio sample</FormLabel>
-                <Dropzone onFileAccepted={onFileAccepted} />
+                <Dropzone />
+                {audioSample && <p>Selected: {audioSample.name}</p>}
               </FormControl>
 
               <FormControl alignItems="center">
@@ -152,10 +153,10 @@ const CreateRoomDrawer = (props: { isOpen: boolean; onClose: () => void; onOpen:
                   If toggled on, your room will be not be seen publically
                 </FormHelperText>
               </FormControl>
-              <FormControl display="flex" alignItems="center">
+              {/* <FormControl display="flex" alignItems="center">
                 <FormLabel>Public after end</FormLabel>
                 <Switch id="publicAfterEnd" size="lg" />
-              </FormControl>
+              </FormControl> */}
             </VStack>
           </DrawerBody>
 

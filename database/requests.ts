@@ -26,7 +26,8 @@ export async function main() {
 export async function getRooms(): Promise<Room[]> {
   return await prisma.room.findMany({include: {
     roomPreferences: true,
-    entries: true
+    entries: true,
+    User: true
   }});
 }
 

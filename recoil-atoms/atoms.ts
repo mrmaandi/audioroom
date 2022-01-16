@@ -5,7 +5,7 @@ export const textState = atom({
   default: "textttt", // default value (aka initial value)
 });
 
-export const burgerMenuState = atom({
-  key: "burgerMenuState",
-  default: false,
+export const audioSampleState = atom<File | undefined>({
+  key: "audioSampleState",
+  default: undefined,
 });

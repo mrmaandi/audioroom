@@ -19,6 +19,7 @@ import {
 import { Room } from "@prisma/client";
 import { format, parseISO } from "date-fns";
 import { GetServerSidePropsContext } from "next";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import CreateRoomDrawer from "../components/CreateRoomDrawer";
 import Header from "../components/Header";
@@ -62,6 +63,10 @@ const RoomCard = (props: { room: Room }) => {
         </Box>
       </Box>
 
+      <Box mt={1}>
+        <Box>Created by: {(room as any).User.name}</Box>
+      </Box>
+
       <Box mt={1} d="flex" alignItems="baseline" mb={2}>
         <Badge rounded="full" px="2" fontSize="0.8em" colorScheme="green">
           In progress
@@ -73,23 +78,28 @@ const RoomCard = (props: { room: Room }) => {
 
 function Library({ data }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const  { data: session } = useSession();
 
   return (
     <div>
       <Container maxW="container.xl">
         <div className="flex items-center">
           <h1 className="text-3xl my-6">Library</h1>
-          <div className="flex-grow"></div>
-          <Button
-            fontWeight="normal"
-            variant="outline"
-            _hover={{ bg: "white", color: "black" }}
-            onClick={onOpen}
-          >
-            Create Room
-          </Button>
+          {session && (
+            <>
+              <div className="flex-grow"></div>
+              <Button
+                fontWeight="normal"
+                variant="outline"
+                _hover={{ bg: "white", color: "black" }}
+                onClick={onOpen}
+              >
+                Create Room
+              </Button>
+            </>
+          )}
         </div>
-        <Input type="search" placeholder='Search' />
+        <Input type="search" placeholder="Search" />
         <Grid templateColumns={{ md: "repeat(2, 1fr)" }} gap={5} py={5}>
           {data.length === 0 && <p>No data found</p>}
           {data.map((room, index) => (

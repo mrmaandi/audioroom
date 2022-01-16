@@ -1,11 +1,15 @@
 import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { Center, useColorModeValue } from "@chakra-ui/react";
+import { useRecoilState } from "recoil";
+import { audioSampleState } from "../recoil-atoms/atoms";
 
-const Dropzone = (props: { onFileAccepted: (file: File) => void }) => {
+const Dropzone = () => {
+  const [audioSample, setAudioSample] = useRecoilState(audioSampleState);
+
   const onDrop = useCallback(
     (acceptedFiles) => {
-      props.onFileAccepted(acceptedFiles[0]);
+      setAudioSample(acceptedFiles[0])
     },
     []
   );
