@@ -10,16 +10,17 @@ export default (request, response) => {
   }
   
   const req = request.body;
-  const { cookies } = request 
+  const { cookies } = request
 
+  const sessionTokenCookie = cookies['next-auth.session-token'] || cookies['__Secure-next-auth.session-token']
 
-  if (!cookies['next-auth.session-token']) {
+  if (!sessionTokenCookie) {
     response.status(400).send({ message: "No session token" });
     return;
   }
 
   const ses = prisma.session.findUnique({
-    where: { sessionToken: cookies['next-auth.session-token'] },
+    where: { sessionToken: sessionTokenCookie },
   });
 
   ses.then((result) => {

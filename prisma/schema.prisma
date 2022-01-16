@@ -43,18 +43,18 @@ model Entry {
 }
 
 model Profile {
-  id        String      @id @default(cuid())
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
   name      String?
   bio       String?
   user      User     @relation(fields: [userId], references: [id])
-  userId    String      @unique
+  userId    String   @unique
   socials   Social[]
 }
 
 model Social {
-  id         String                  @id @default(cuid())
+  id         String               @id @default(cuid())
   createdAt  DateTime             @default(now())
   updatedAt  DateTime             @default(now()) @updatedAt
   platform   SocialMediaPlatform? @relation(fields: [platformId], references: [id])
@@ -62,11 +62,11 @@ model Social {
   name       String?
   link       String?
   profile    Profile              @relation(fields: [profileId], references: [id])
-  profileId  String                  @unique
+  profileId  String               @unique
 }
 
 model SocialMediaPlatform {
-  id     String      @id @default(cuid())
+  id     String   @id @default(cuid())
   name   String
   icon   String?
   social Social[]
