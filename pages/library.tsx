@@ -31,6 +31,7 @@ interface Props {
 
 const RoomCard = (props: { room: Room }) => {
   const { room } = props;
+  const router = useRouter();
 
   return (
     <Box
@@ -42,6 +43,8 @@ const RoomCard = (props: { room: Room }) => {
       position="relative"
       height="full"
       p="6"
+      _hover={{ cursor: 'pointer'}}
+      onClick={() => router.push(`/library/${room.id}`)}
     >
       {/* <Box w="100%" h="200px" bgGradient="linear(to-br, blue.300, teal.500)">
           <Center height="full" fontSize="2xl" fontWeight="semibold" as="h4" lineHeight="tight" isTruncated textColor="white">{(room as any).roomPreferences.title}</Center>
@@ -67,6 +70,10 @@ const RoomCard = (props: { room: Room }) => {
         <Box>Created by: {(room as any).User.name}</Box>
       </Box>
 
+      <Box mt={1}>
+        <Box>Entries: {(room as any).entries.length}</Box>
+      </Box>
+
       <Box mt={1} d="flex" alignItems="baseline" mb={2}>
         <Badge rounded="full" px="2" fontSize="0.8em" colorScheme="green">
           In progress
@@ -78,13 +85,13 @@ const RoomCard = (props: { room: Room }) => {
 
 function Library({ data }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const  { data: session } = useSession();
+  const { data: session } = useSession();
 
   return (
     <div>
       <Container maxW="container.xl">
         <div className="flex items-center">
-          <h1 className="text-3xl my-6">Library</h1>
+          <h1 className="text-4xl font-extrabold pb-5">Library</h1>
           {session && (
             <>
               <div className="flex-grow"></div>

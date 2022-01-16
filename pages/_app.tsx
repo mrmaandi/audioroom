@@ -1,10 +1,10 @@
-import { ChakraProvider, ScaleFade } from "@chakra-ui/react";
+import { Box, ChakraProvider } from "@chakra-ui/react";
+import { SessionProvider } from "next-auth/react";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { RecoilRoot } from "recoil";
 import "tailwindcss/tailwind.css";
 import Header from "../components/Header";
-import { SessionProvider } from "next-auth/react"
 
 function MyApp({ Component, pageProps: { session, ...pageProps }, router }: AppProps) {
   return (
@@ -16,9 +16,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps }, router }: AppP
         <RecoilRoot>
           <ChakraProvider>
             {router.route != "/" && (
-              <div className="sticky top-0 bg-white z-10 text-slate-700">
+              <Box bgColor="whiteAlpha.900" position="sticky" top={0} zIndex={10} textColor="blackAlpha.900">
                 <Header />
-              </div>
+              </Box>
             )}
 
             {/* todo : fix landing page refresh scrolls down */}

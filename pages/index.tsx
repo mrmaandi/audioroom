@@ -9,7 +9,7 @@ export default function Home() {
     <div>
       <main>
         <div className="flex flex-col text-white bg-noiselab bg-no-repeat bg-cover bg-center">
-          <div>
+          <div className="pt-4">
             <Header isMain />
           </div>
           <LandingSection />

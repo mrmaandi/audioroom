@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient()
 
 
-export default (request, response) => {
+export default (request: any, response: any) => {
   if (request.method !== "POST") {
     response.status(400).send({ message: "Only POST requests allowed" });
     return;
@@ -23,14 +23,14 @@ export default (request, response) => {
     where: { sessionToken: sessionTokenCookie },
   });
 
-  ses.then((result) => {
-    console.log(result.userId);
 
+  // fix createdby ! thing
+  ses.then((result) => {
     prisma.room.create({
       data: {
         start: req.startDateTime,
         end: req.endDateTime,
-        createdBy: result.userId,
+        createdBy: result!.userId,
         roomPreferences: {
           create: {
             title: req.title,
