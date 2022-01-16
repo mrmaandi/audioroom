@@ -70,17 +70,21 @@ const Room = (props: { data: RoomCombined | null }) => {
         )} */}
       </Flex>
 
-      <Box pt={6}>
-        <Dropzone />
-      </Box>
-      <Button
-        fontWeight="normal"
-        variant="outline"
-        _hover={{ bg: "white", color: "black" }}
-        onClick={addEntry}
-      >
-        Add entry
-      </Button>
+      {session && (
+        <>
+          <Box pt={6}>
+            <Dropzone />
+          </Box>
+          <Button
+            fontWeight="normal"
+            variant="outline"
+            _hover={{ bg: "white", color: "black" }}
+            onClick={addEntry}
+          >
+            Add entry
+          </Button>
+        </>
+      )}
       <Box pt={6}>
         <h1 className="text-4xl font-extrabold">Entries</h1>
       </Box>

@@ -10,7 +10,7 @@ export default function Home() {
       <main>
         <div className="flex flex-col text-white bg-noiselab bg-no-repeat bg-cover bg-center">
           <div className="pt-4">
-            <Header isMain />
+            <Header />
           </div>
           <LandingSection />
         </div>

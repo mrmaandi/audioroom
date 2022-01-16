@@ -9,8 +9,9 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
-  Flex, useDisclosure,
-  VStack
+  Flex,
+  useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
 import { MenuIcon } from "@heroicons/react/outline";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -39,7 +40,7 @@ export const navPaths: NavPath[] = [
   },
 ];
 
-function Header(props: { isMain?: boolean }) {
+function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { data: session } = useSession();
   const router = useRouter();
