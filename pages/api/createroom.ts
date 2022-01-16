@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient()
 
 
-export default (request: any, response: any) => {
+function createRoom(request: any, response: any) {
   if (request.method !== "POST") {
     response.status(400).send({ message: "Only POST requests allowed" });
     return;
@@ -46,3 +46,5 @@ export default (request: any, response: any) => {
     });
   })
 }
+
+export default createRoom;

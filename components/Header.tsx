@@ -9,10 +9,8 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
-  Flex,
-  StackDivider,
-  useDisclosure,
-  VStack,
+  Flex, useDisclosure,
+  VStack
 } from "@chakra-ui/react";
 import { MenuIcon } from "@heroicons/react/outline";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -92,7 +90,7 @@ function Header(props: { isMain?: boolean }) {
           <DrawerBody>
             <VStack spacing={12} align="stretch">
               {navPaths.map((path, index) => (
-                <Link href={path.link} key={index}>
+                <Link passHref={true} href={path.link} key={index}>
                   <Box onClick={onClose} fontSize="lg" fontWeight="semibold">
                     {path.name}
                   </Box>

@@ -1,4 +1,4 @@
-import { Button, Link } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
 
@@ -26,7 +26,7 @@ const LandingSection = () => {
       </div>
       <div className="flex justify-center py-5">
         <div className="flex flex-col gap-2">
-          <p>Find out what we're about</p>
+          <p>Find out what we`re about</p>
           <ChevronDownIcon className="animate-bounce h-6" />
         </div>
       </div>

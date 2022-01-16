@@ -12,7 +12,8 @@ const MainContent = () => {
                 <h1 className="text-5xl font-extrabold pb-5">Connect with people</h1>
                 <p className="text-lg text-slate-600">
                   Sample flippers, music producers and others alike — this is to whom Audioroom is
-                  created for. It's a place to join and create challenges and find other producers to collaborate with.
+                  created for. It`s a place to join and create challenges and find other producers
+                  to collaborate with.
                 </p>
               </VStack>
             </Box>
@@ -20,7 +21,12 @@ const MainContent = () => {
         </GridItem>
         <GridItem>
           <Center h="full">
-            <img src="/img/undraw_online_connection_6778.svg" alt="star" />
+            <Image
+              width="600"
+              height="500"
+              src="/img/undraw_online_connection_6778.svg"
+              alt="star"
+            />
           </Center>
         </GridItem>
       </Grid>
@@ -38,7 +44,12 @@ const MainContent = () => {
         </GridItem>
         <GridItem>
           <Center h="full">
-            <img src="/img/undraw_audio_conversation_re_ptsl.svg" alt="star" />
+            <Image
+              width="600"
+              height="500"
+              src="/img/undraw_audio_conversation_re_ptsl.svg"
+              alt="star"
+            />
           </Center>
         </GridItem>
       </Grid>

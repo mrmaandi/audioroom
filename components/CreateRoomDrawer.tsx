@@ -134,7 +134,7 @@ const CreateRoomDrawer = (props: { isOpen: boolean; onClose: () => void; onOpen:
                 <FormLabel>End date</FormLabel>
                 <Input id="endDateTime" type="datetime-local" />
                 <FormHelperText>
-                  Don't set if you want to keep submittions open forever
+                  Don`t set if you want to keep submittions open forever
                 </FormHelperText>
               </FormControl>
 
