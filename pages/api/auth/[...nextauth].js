@@ -31,5 +31,6 @@ export default NextAuth({
       return session;
     },
   },
+  database: process.env.DATABASE_URL,
   debug: true,
 });
