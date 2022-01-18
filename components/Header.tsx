@@ -50,8 +50,8 @@ function Header() {
       return (
         <>
           <Flex justifyContent="center" alignItems="center" gap={2}>
-            <Avatar name={session.user?.name || "Unnamed"} src={session.user?.image || ""} />
-            {session.user?.name} <br />
+            <Avatar size="sm" name={session.user?.name || "Unnamed"} src={session.user?.image || ""} />
+            {session.user?.name}
           </Flex>
           <Button
             fontWeight="normal"

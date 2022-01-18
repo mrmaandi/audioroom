@@ -9,7 +9,7 @@ const MainContent = () => {
           <Center h="full">
             <Box>
               <VStack spacing={6} align="stretch">
-                <h1 className="text-5xl font-extrabold pb-5">Connect with people</h1>
+                <h1 className="text-5xl font-extrabold pb-5 underline decoration-indigo-500 decoration-wavy decoration-3">Connect with people</h1>
                 <p className="text-lg text-slate-600">
                   Sample flippers, music producers and others alike — this is to whom Audioroom is
                   created for. It`s a place to join and create challenges and find other producers
@@ -35,7 +35,7 @@ const MainContent = () => {
         <GridItem>
           <Center h="full">
             <Box>
-              <h1 className="text-5xl font-extrabold pb-5">Create challenges</h1>
+              <h1 className="text-5xl font-extrabold pb-5 underline decoration-indigo-500 decoration-wavy decoration-3">Create challenges</h1>
               <p className="text-lg text-slate-600">
                 In the dashboard you can create new challenges for others to participate in.
               </p>

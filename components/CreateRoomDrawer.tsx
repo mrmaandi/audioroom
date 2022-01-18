@@ -8,7 +8,6 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  Flex,
   FormControl,
   FormHelperText,
   FormLabel,
@@ -18,6 +17,7 @@ import {
   useToast,
   VStack,
 } from "@chakra-ui/react";
+import { addHours, format, parseISO } from "date-fns";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
@@ -33,16 +33,16 @@ const CreateRoomDrawer = (props: { isOpen: boolean; onClose: () => void; onOpen:
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [startDateTime, setStartDateTime] = useState(new Date());
-  const [endDateTime, setEndDateTime] = useState(new Date());
+  const [startDateTime, setStartDateTime] = useState(format(new Date(), "yyyy-MM-dd'T'hh:mm"));
+  const [endDateTime, setEndDateTime] = useState(format(addHours(new Date(), 1), "yyyy-MM-dd'T'hh:mm"));
   const [isPrivate, setIsPrivate] = useState(false);
   const [makePublicAfterEnd, setMakePublicAfterEnd] = useState(false);
 
   const clearValues = () => {
     setTitle("");
     setDescription("");
-    setStartDateTime(new Date());
-    setEndDateTime(new Date());
+    setStartDateTime(format(new Date(), "yyyy-MM-dd'T'hh:mm"));
+    setEndDateTime(format(addHours(new Date(), 1), "yyyy-MM-dd'T'hh:mm"));
     setIsPrivate(false);
     setMakePublicAfterEnd(false);
     setAudioSample(undefined);
@@ -52,8 +52,8 @@ const CreateRoomDrawer = (props: { isOpen: boolean; onClose: () => void; onOpen:
     const request: CreateRoomRequest = {
       title: title,
       description: description,
-      startDateTime: startDateTime,
-      endDateTime: endDateTime,
+      startDateTime: parseISO(startDateTime),
+      endDateTime: parseISO(endDateTime),
       isPrivate: isPrivate,
       makePublicAfterEnd: makePublicAfterEnd,
     };
@@ -125,14 +125,24 @@ const CreateRoomDrawer = (props: { isOpen: boolean; onClose: () => void; onOpen:
               </FormControl>
               <FormControl>
                 <FormLabel>Start date</FormLabel>
-                <Input id="startDateTime" type="datetime-local" />
+                <Input
+                  id="startDateTime"
+                  type="datetime-local"
+                  value={startDateTime}
+                  onChange={(e) => setStartDateTime(e.currentTarget.value)}
+                />
                 <FormHelperText>
                   Select if you want the challenge to start at a later time
                 </FormHelperText>
               </FormControl>
               <FormControl>
                 <FormLabel>End date</FormLabel>
-                <Input id="endDateTime" type="datetime-local" />
+                <Input
+                  id="endDateTime"
+                  type="datetime-local"
+                  value={endDateTime}
+                  onChange={(e) => setEndDateTime(e.currentTarget.value)}
+                />
                 <FormHelperText>
                   Don`t set if you want to keep submittions open forever
                 </FormHelperText>
@@ -166,7 +176,7 @@ const CreateRoomDrawer = (props: { isOpen: boolean; onClose: () => void; onOpen:
               fontWeight="normal"
               textTransform="uppercase"
               onClick={clearValues}
-              mr={3} 
+              mr={3}
             >
               Clear
             </Button>

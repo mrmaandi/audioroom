@@ -1,3 +1,4 @@
+import { AddIcon } from "@chakra-ui/icons";
 import {
   Badge,
   Box,
@@ -32,10 +33,11 @@ function Library({ rooms }: Props) {
     <div>
       <Container maxW="container.xl" pt={6}>
         {session ? (
-          <Flex alignItems="center">
+          <Flex alignItems="center" pb={5}>
             <h1 className="text-4xl font-extrabold">Library</h1>
             <Spacer />
             <Button
+              leftIcon={<AddIcon />}
               fontWeight="normal"
               variant="outline"
               _hover={{ bg: "white", color: "black" }}
@@ -48,10 +50,10 @@ function Library({ rooms }: Props) {
           <h1 className="text-4xl font-extrabold pb-5">Library</h1>
         )}
 
-        <Input type="search" placeholder="Search" mt={4} />
+        <Input borderRadius="full" type="search" placeholder="Search" height={12}/>
 
         {session && (
-          <>
+          <Box mb={5}>
             <h1 className="text-4xl font-extrabold pb-2 pt-5">Your rooms</h1>
             <Grid templateColumns={{ md: "repeat(2, 1fr)" }} gap={5} py={5}>
               {rooms.filter((room: RoomCombined) => room.createdBy === (session as any).user.id)
@@ -62,7 +64,7 @@ function Library({ rooms }: Props) {
                 </GridItem>
               ))}
             </Grid>
-          </>
+          </Box>
         )}
         
         <h1 className="text-4xl font-extrabold pb-2 pt-5">All rooms</h1>
